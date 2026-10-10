@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "CF Spoiler Shield",
+  "version": "1.0.0",
+  "description": "Read Codeforces editorials one paragraph at a time without accidental spoilers.",
+  "permissions": ["storage", "activeTab"],
+  "action": {
+    "default_title": "CF Spoiler Shield",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://codeforces.com/blog/entry/*",
+        "https://*.codeforces.com/blog/entry/*"
+      ],
+      "js": ["src/core.js", "src/page.js", "src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CF Spoiler Shield</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <h1>CF Spoiler Shield</h1>
+    <p class="lede">Read a Codeforces editorial one paragraph at a time. The text stays the original editorial.</p>
+    <p id="page-state" class="state">Checking this tab…</p>
+    <button id="choose" type="button" class="primary" disabled>Choose editorial section</button>
+    <label class="toggle">
+      <input id="auto" type="checkbox" checked>
+      <span>Restore saved shields automatically</span>
+    </label>
+    <section>
+      <h2>Recent sections</h2>
+      <ul id="recent"></ul>
+      <p id="empty" class="muted" hidden>No shielded sections yet.</p>
+    </section>
+    <div class="row">
+      <button id="demo" type="button">Open demo</button>
+      <button id="clear" type="button" class="danger">Clear saved progress</button>
+    </div>
+  </main>
+  <script src="src/core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

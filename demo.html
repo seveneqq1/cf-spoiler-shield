@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CF Spoiler Shield demo</title>
+  <link rel="stylesheet" href="src/content.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #121218;
+      --paper: #1c1b24;
+      --text: #eceaf4;
+      --muted: #a7a3b5;
+      --line: #343242;
+      --accent: #7b6cf6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 17px/1.55 Georgia, "Iowan Old Style", serif;
+    }
+    header, main { width: min(740px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 28px 0 8px; }
+    h1 { font-size: 32px; letter-spacing: -0.03em; margin: 0 0 8px; }
+    .tools { display: flex; gap: 8px; align-items: center; margin: 16px 0 8px; font-family: system-ui, sans-serif; }
+    button {
+      font: 14px/1.3 system-ui, sans-serif;
+      background: var(--accent);
+      color: white;
+      border: 0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    button:focus-visible { outline: 2px solid #c8c2ff; outline-offset: 2px; }
+    .hint { color: var(--muted); font: 14px/1.45 system-ui, sans-serif; }
+    article {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 8px 22px 22px;
+    }
+    aside {
+      margin: 18px 0 40px;
+      color: var(--muted);
+      font: 14px/1.45 system-ui, sans-serif;
+    }
+    h2 { font-size: 22px; margin: 1.2em 0 0.4em; }
+    .equation {
+      margin: 0.8rem 0;
+      padding: 10px 12px;
+      background: #14141b;
+      border-radius: 10px;
+      text-align: center;
+      font-family: "Iowan Old Style", Georgia, serif;
+    }
+    figure { margin: 0.8rem 0; }
+    svg { width: 100%; height: auto; background: #14141b; border-radius: 12px; }
+    figcaption { color: var(--muted); font: 13px/1.4 system-ui, sans-serif; }
+    pre {
+      overflow: auto;
+      padding: 12px;
+      background: #101016;
+      border-radius: 10px;
+      font: 13px/1.45 ui-monospace, monospace;
+    }
+    table { border-collapse: collapse; width: 100%; font: 15px/1.4 system-ui, sans-serif; }
+    th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; }
+    .spoiler { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; margin: 0.8rem 0; }
+    .spoiler-title { cursor: pointer; font-family: system-ui, sans-serif; }
+    .spoiler-content { display: none; margin-top: 8px; }
+    a { color: #c8c2ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Harbor City Round</h1>
+    <p class="hint">A fictional editorial for the demo. Double-click this file, choose a section, then use Reveal next paragraph. Refresh the page to see saved progress return.</p>
+    <div class="tools">
+      <button id="choose" type="button">Choose editorial section</button>
+    </div>
+  </header>
+  <main>
+    <article data-cfss-article>
+      <p>This round is about ferries, lanterns, and a schedule that looks simpler than it is. The notes below are original practice text.</p>
+      <h2>A. Lantern Count</h2>
+      <p>Hang lanterns on a path of n poles. A lantern at pole i lights a radius of r. Count poles that stay dark.</p>
+      <p>Walk from left to right and keep the furthest pole covered so far. When the next pole is beyond that reach, start a new lantern. Use <code>covered</code> for the current reach, which is only notation, not the full program.</p>
+      <ul>
+        <li>Sort the pole positions.</li>
+        <li>Place a lantern only when the sweep falls short.</li>
+        <li>Add the radius to the new reach.</li>
+      </ul>
+      <div class="equation">covered = max(covered, position + radius)</div>
+      <p>The same sweep answers the sample. Poles at 1, 4, and 10 with radius 2 need two lanterns.</p>
+      <pre>function lanterns(poles, radius) {
+  let covered = -1;
+  let used = 0;
+  for (const pole of poles) {
+    if (pole &gt; covered) {
+      used += 1;
+      covered = pole + radius;
+    }
+  }
+  return used;
+}</pre>
+      <h2>B. Ferry Schedule</h2>
+      <p>Boats leave every w minutes, but a boat is skipped when the dock is busy. Find the earliest boat a traveler can catch after time t.</p>
+      <figure>
+        <svg viewBox="0 0 360 90" role="img" aria-label="Three ferry windows on a timeline">
+          <rect x="20" y="38" width="70" height="16" rx="6" fill="#7b6cf6"></rect>
+          <rect x="140" y="38" width="70" height="16" rx="6" fill="#3c3a4b"></rect>
+          <rect x="260" y="38" width="70" height="16" rx="6" fill="#7b6cf6"></rect>
+          <text x="28" y="28" fill="#eceaf4" font-size="12" font-family="system-ui">open</text>
+          <text x="154" y="28" fill="#eceaf4" font-size="12" font-family="system-ui">busy</text>
+          <text x="274" y="28" fill="#eceaf4" font-size="12" font-family="system-ui">open</text>
+        </svg>
+        <figcaption>Open windows are the only departures that count.</figcaption>
+      </figure>
+      <table>
+        <tr><th>Window</th><th>Status</th></tr>
+        <tr><td>0 to w</td><td>Open</td></tr>
+        <tr><td>w to 2w</td><td>Busy</td></tr>
+      </table>
+      <p>Jump by groups of windows instead of simulating every minute. The busy pattern repeats, so a direct formula finds the next open slot.</p>
+      <div class="spoiler">
+        <div class="spoiler-title">Worked example</div>
+        <div class="spoiler-content">
+          <p>For t = 5 and w = 4, the next open departure is 8. The arithmetic sits here until you open this spoiler yourself.</p>
+          <pre>next = ((Math.floor(t / w) + 1) | 1) * w;</pre>
+        </div>
+      </div>
+      <pre>function nextFerry(time, width) {
+  const windowIndex = Math.floor(time / width) + 1;
+  const openIndex = windowIndex + (windowIndex % 2);
+  return openIndex * width;
+}</pre>
+      <p class="note-label">Implementation notes</p>
+      <p>These remarks sit under a label that is not a problem heading. Detection should leave them alone so you can select them by hand.</p>
+      <p>Keep the sweep index and the ferry formula in separate functions. Mixing them makes the sample for A look like it depends on the dock schedule.</p>
+      <pre>function checkSamples() {
+  return lanterns([1, 4, 10], 2) === 2 &amp;&amp; nextFerry(5, 4) === 8;
+}</pre>
+    </article>
+    <aside>
+      <p>Comments stay outside the article. A selection that starts here should be rejected.</p>
+      <p id="outside">This paragraph is not part of the editorial.</p>
+    </aside>
+  </main>
+  <script src="src/core.js"></script>
+  <script src="src/page.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>

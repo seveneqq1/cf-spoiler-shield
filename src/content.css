@@ -1,0 +1,29 @@
+.cfss-slot {
+  margin: 0.55rem 0;
+}
+
+.cfss-placeholder {
+  margin: 0;
+  padding: 0.45rem 0.7rem;
+  border: 1px dashed #6f63d8;
+  border-radius: 8px;
+  background: #17161d;
+  color: #c6c2d6;
+  font: 13px/1.4 system-ui, sans-serif;
+  user-select: none;
+}
+
+.cfss-content[hidden] {
+  display: none !important;
+}
+
+.cfss-candidate {
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(123, 108, 246, 0.45);
+  border-radius: 8px;
+}
+
+.cfss-candidate.cfss-edge {
+  box-shadow: inset 0 0 0 2px #7b6cf6;
+  background: rgba(123, 108, 246, 0.08);
+}

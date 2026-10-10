@@ -1,0 +1,9 @@
+{
+  "name": "cf-spoiler-shield",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Read Codeforces editorials one paragraph at a time.",
+  "scripts": {
+    "test": "node --test tests/"
+  }
+}
