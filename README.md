@@ -12,9 +12,68 @@ Read a Codeforces editorial one paragraph at a time. The extension hides the sec
 
 If that editorial tab was already open, refresh it. Chrome injects the content script on load, so a tab from before installation will not respond until you reload it.
 
-No terminal commands and no installs are required to use the extension or the demo.
+No installs are required to use the extension or the demo.
 
-To preview without Chrome, double-click `demo.html`. It works from a `file://` address.
+To preview without installing the extension, double-click `demo.html`. It works from a `file://` address.
+
+## Launch from the terminal
+
+Clone the repository, then either load the folder in Chrome as above, or start Chrome with this extension from the command line. The commands below use a local Chrome profile so they still work if Chrome is already open.
+
+### macOS
+
+```bash
+git clone https://github.com/seveneqq1/cf-spoiler-shield.git
+cd cf-spoiler-shield
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  --user-data-dir="$PWD/.chrome-profile" \
+  --disable-extensions-except="$PWD" \
+  --load-extension="$PWD"
+```
+
+Open the demo without Chrome:
+
+```bash
+open demo.html
+```
+
+### Windows
+
+In PowerShell:
+
+```powershell
+git clone https://github.com/seveneqq1/cf-spoiler-shield.git
+cd cf-spoiler-shield
+& "$env:ProgramFiles\Google\Chrome\Application\chrome.exe" `
+  --user-data-dir="$PWD\.chrome-profile" `
+  --disable-extensions-except="$PWD" `
+  --load-extension="$PWD"
+```
+
+Open the demo without Chrome:
+
+```powershell
+start demo.html
+```
+
+### Linux
+
+```bash
+git clone https://github.com/seveneqq1/cf-spoiler-shield.git
+cd cf-spoiler-shield
+google-chrome \
+  --user-data-dir="$PWD/.chrome-profile" \
+  --disable-extensions-except="$PWD" \
+  --load-extension="$PWD"
+```
+
+If `google-chrome` is not on your PATH, use `google-chrome-stable` or `chromium`. Open the demo without Chrome:
+
+```bash
+xdg-open demo.html
+```
+
+After Chrome starts, open a Codeforces editorial (`codeforces.com/blog/entry/…`). If that tab was already open in this window, refresh it.
 
 ## How to read
 
